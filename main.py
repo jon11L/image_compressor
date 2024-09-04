@@ -20,8 +20,8 @@ def compress_images(input_dir, output_dir, quality=30):
             print(f"Compressed and saved: {output_path}")
 
 if __name__ == "__main__":
-    input_directory = "images_raw"
-    output_directory = "compressed_images"
+    input_directory = "path_to_your_input_directory"
+    output_directory = "path_to_your_output_directory"
     quality = 30  # Adjust quality as needed, lower means more compression
 
     compress_images(input_directory, output_directory, quality)
