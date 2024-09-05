@@ -1,7 +1,5 @@
 # Image compressor
 
-I have originally created this python script with the help of chatGPT to compress some photos/images i had to send. As they contained confidential data, i did not want to put them through these 3rd party websites.
-
 ## How the Program Works:
 
 1. **Imports**: It imports the necessary libraries (`PIL` for image processing and `os` for file handling).
@@ -22,4 +20,5 @@ I have originally created this python script with the help of chatGPT to compres
 When you run the script, it will compress the images in the specified directory and save the compressed versions in the output directory.
 
 
-#### info : Tested with jpg files of a size about 2.5mb and turned to 200-300kb successfully.
+#### info :
+ Tested with jpg files of a size about 2.5mb and turned to 200-300kb successfully.
