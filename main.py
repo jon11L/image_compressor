@@ -1,6 +1,5 @@
 from PIL import Image
 import os
-
 import time
 
 def compress_images(input_dir, output_dir, quality=int):
@@ -39,14 +38,6 @@ def compress_images(input_dir, output_dir, quality=int):
                 print(f"Compressed and saved to: {output_path}. In {round(timing, 4)}s") # In {timing} time
             except Exception as save_error:
                 print(f"Failed to save {output_path}: {save_error}")
-                # os.
-            
-            
-
-
-# D:\programming\personal\projects
-
-
 
 
 if __name__ == "__main__":
