@@ -48,5 +48,3 @@ if __name__ == "__main__":
     quality = 30
 
     compress_images(input_directory, output_directory, quality)
-
-# D:\programming\personal\projects
