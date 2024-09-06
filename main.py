@@ -44,7 +44,7 @@ def compress_images(input_dir: str, output_dir: str, quality:int = 30):
 
 if __name__ == "__main__":
     input_directory = "path_to_your_input_directory"
-    output_directory = "image_compressed" # If kept like this, that directory will be created where user currently is.
+    output_directory = "compressed_images" # If kept like this, that directory will be created where user currently is.
     quality = 30
 
     compress_images(input_directory, output_directory, quality)
