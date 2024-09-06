@@ -1,48 +1,52 @@
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 import time
 
-def compress_images(input_dir, output_dir, quality=int):
-    '''takes images and compress them into a new diretory, with a parameter to adjust the compression size.'''
+def compress_images(input_dir: str, output_dir: str, quality:int = 30):
+    '''Compresses images from the input directory and saves them to the output directory. 
+    - input_dir (the directory where the program will look for the images to be compressed.)
+    - output_dir (Where the compressed images will be stored, if this directory does not exist it will then be created.)
+    - quality (allow to adjust the compression level // value: 1 - 95 , the lower the more compression, also more possible quality loss.)
+    '''
+    # Check if input dictionary is existing before proceeding, if not prompt the user to input.
+    while not os.path.exists(input_dir):
+        print(f"directory '{input_dir}' could not be found or does not exist.")
+        input_dir = input("Please enter a valid input directory path: ")
 
-    # Check if input dictionary is existing before proceeding.
-    while True:
-        try:
-            # If input directory doesn't exist/not found, then error is raise and user prompted to enter it again.
-            if not os.path.exists(input_dir):
-                raise FileNotFoundError(f"directory '{input_dir}' could not be found or does not exist.")
-            break           
-        except FileNotFoundError as e:
-            print(e)
-            input_dir = input("Please enter a valid input directory path: ")
-
-    # Create the output directory if it doesn't exist.
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    # Directory exist, process the image files
+    # some details feature, how many files were compressed and the total time it took.
     start_time = time.time()
+    compressed_count = 0
+
     for filename in os.listdir(input_dir):
 
-        if filename.lower().endswith(".jpg") or filename.lower().endswith(".jpeg"):
-            filepath = os.path.join(input_dir, filename)
-            image = Image.open(filepath)
-
-            # Compress and save the image
+        if filename.lower().endswith((".jpg",".jpeg", ".png")):
+            input_path = os.path.join(input_dir, filename)
             output_path = os.path.join(output_dir, filename)
+            # Compress and save the image
             try:
-                image.save(output_path, "JPEG", quality=quality)
-                end_time = time.time()
-                timing = end_time - start_time 
-                print(f"")
-                print(f"Compressed and saved to: {output_path}. In {round(timing, 4)}s") # In {timing} time
-            except Exception as save_error:
-                print(f"Failed to save {output_path}: {save_error}")
+                with Image.open(input_path) as img:
+                    img = ImageOps.exif_transpose(img)
+
+                    os.makedirs(output_dir, exist_ok=True)
+                    img.save(output_path, "JPEG", quality=quality, optimize=True)
+                    compressed_count += 1
+                    print(f"Compressed: {output_path}") 
+            except Exception as e:
+                print(f"Failed to compressed and or save the file: {output_path}: \n {e}")
+
+    end_time = time.time()
+    if compressed_count > 0:
+        print(f"Compression done!  In {round(end_time - start_time, 3)}s.  \nSaved to: {output_dir}.")
+        print(f"{compressed_count} images compressed.")
+    else:
+        print("no images were compressed.")
 
 
 if __name__ == "__main__":
     input_directory = "path_to_your_input_directory"
     output_directory = "image_compressed" # If kept like this, that directory will be created where user currently is.
-    quality = 30  # Adjust quality as needed, lower means more compression.
+    quality = 30
 
     compress_images(input_directory, output_directory, quality)
+
+# D:\programming\personal\projects
